@@ -1,6 +1,7 @@
 import 'styles/antd.less'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
+import TheLayout from 'components/_App/TheLayout'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="canonical" href="/"></link>
       </Head>
 
-      <Component {...pageProps} />
+      <TheLayout>
+        <Component {...pageProps} />
+      </TheLayout>
     </>
   )
 }
