@@ -1,6 +1,15 @@
 import type { NextPage } from 'next'
-import { Button, Card, Form, Input, InputNumber, Radio, Select } from 'antd'
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Popconfirm,
+} from 'antd'
+import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
 import { harborTypes as harbors, tripTypes } from 'constants/booking'
 import { countries } from 'constants/country'
 import { genders } from 'constants/ticket'
@@ -79,10 +88,13 @@ const Home: NextPage = () => {
                   type="inner"
                   title={`#${i + 1} Passenger`}
                   extra={
-                    <MinusCircleOutlined
-                      onClick={() => remove(field.name)}
-                      style={{ color: 'red' }}
-                    />
+                    <Popconfirm
+                      title="Are you sure to delete this passenger?"
+                      placement="bottomRight"
+                      onConfirm={() => remove(field.name)}
+                    >
+                      <UserDeleteOutlined style={{ color: 'red' }} />
+                    </Popconfirm>
                   }
                   style={{ marginBottom: 20 }}
                 >
@@ -174,9 +186,9 @@ const Home: NextPage = () => {
                   type="dashed"
                   onClick={() => add()}
                   block
-                  icon={<PlusOutlined />}
+                  icon={<UserAddOutlined />}
                 >
-                  Add field
+                  Add a passenger
                 </Button>
               </Form.Item>
             </>
