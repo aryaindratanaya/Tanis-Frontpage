@@ -11,8 +11,9 @@ import {
 } from 'antd'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
 import { harborTypes as harbors } from 'constants/booking'
-import { countries } from 'constants/country'
 import { genders } from 'constants/ticket'
+import { countries } from 'constants/country'
+import { genericRequiredRule } from 'libs/formRules'
 
 const Home: NextPage = () => {
   return (
@@ -22,12 +23,7 @@ const Home: NextPage = () => {
           label="From"
           name="from"
           initialValue={Object.entries(harbors)[0][1]}
-          rules={[
-            {
-              required: true,
-              message: 'This field cannot be empty!',
-            },
-          ]}
+          required
         >
           <Select>
             {Object.entries(harbors).map(([harborKey, harborName]) => (
@@ -41,12 +37,7 @@ const Home: NextPage = () => {
           label="To"
           name="to"
           initialValue={Object.entries(harbors)[1][1]}
-          rules={[
-            {
-              required: true,
-              message: 'This field cannot be empty!',
-            },
-          ]}
+          required
         >
           <Select>
             {Object.entries(harbors).map(([harborKey, harborName]) => (
@@ -60,12 +51,7 @@ const Home: NextPage = () => {
           label="One-way or Roundtrip?"
           name="roundtrip"
           initialValue={false}
-          rules={[
-            {
-              required: true,
-              message: 'This field cannot be empty!',
-            },
-          ]}
+          required
         >
           <Radio.Group buttonStyle="solid" style={{ width: '100%' }}>
             <Radio.Button
@@ -82,8 +68,21 @@ const Home: NextPage = () => {
             </Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.List name="passengers">
-          {(fields, { add, remove }) => (
+        <Form.List
+          name="passengers"
+          rules={[
+            {
+              validator: async (_, names) => {
+                if (!names || names.length < 1) {
+                  return Promise.reject(
+                    new Error('At least 1 passenger required.')
+                  )
+                }
+              },
+            },
+          ]}
+        >
+          {(fields, { add, remove }, { errors }) => (
             <>
               {fields.map((field, i) => (
                 <Card
@@ -104,24 +103,14 @@ const Home: NextPage = () => {
                   <Form.Item
                     label="Name"
                     name={[field.name, 'name']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'This field cannot be empty!',
-                      },
-                    ]}
+                    rules={[genericRequiredRule]}
                   >
                     <Input placeholder="Please input passenger's name" />
                   </Form.Item>
                   <Form.Item
                     label="Age"
                     name={[field.name, 'age']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'This field cannot be empty!',
-                      },
-                    ]}
+                    rules={[genericRequiredRule]}
                   >
                     <InputNumber
                       min={0}
@@ -133,12 +122,7 @@ const Home: NextPage = () => {
                     label="Gender"
                     name={[field.name, 'gender']}
                     initialValue={Object.entries(genders)[0][1]}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'This field cannot be empty!',
-                      },
-                    ]}
+                    rules={[genericRequiredRule]}
                   >
                     <Select>
                       {Object.entries(genders).map(
@@ -154,12 +138,7 @@ const Home: NextPage = () => {
                     label="Nationality"
                     name={[field.name, 'nationality']}
                     initialValue={countries[101].name}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'This field cannot be empty!',
-                      },
-                    ]}
+                    rules={[genericRequiredRule]}
                   >
                     <Select showSearch>
                       {countries.map(({ name, code }) => (
@@ -172,12 +151,7 @@ const Home: NextPage = () => {
                   <Form.Item
                     label="Address"
                     name={[field.name, 'address']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'This field cannot be empty!',
-                      },
-                    ]}
+                    rules={[genericRequiredRule]}
                   >
                     <Input placeholder="Please input passenger's address" />
                   </Form.Item>
@@ -193,6 +167,7 @@ const Home: NextPage = () => {
                 >
                   Add a passenger
                 </Button>
+                <Form.ErrorList errors={errors} />
               </Form.Item>
             </>
           )}
