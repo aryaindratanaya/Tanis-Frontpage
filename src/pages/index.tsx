@@ -11,7 +11,10 @@ import {
   Popconfirm,
 } from 'antd'
 import { UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons'
-import { harborTypes as harbors } from 'constants/booking'
+import {
+  harborTypes as harbors,
+  roundtrip as roundtrips,
+} from 'constants/booking'
 import { genders } from 'constants/ticket'
 import { countries } from 'constants/country'
 import { genericRequiredRule } from 'libs/formRules'
@@ -54,24 +57,23 @@ const Home: NextPage = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="One-way or Roundtrip?"
+          label={Object.keys(roundtrips).join(' or ') + '?'}
           name="roundtrip"
           initialValue={false}
           required
         >
           <Radio.Group buttonStyle="solid" style={{ width: '100%' }}>
-            <Radio.Button
-              value={false}
-              style={{ width: '50%', textAlign: 'center' }}
-            >
-              One-Way
-            </Radio.Button>
-            <Radio.Button
-              value={true}
-              style={{ width: '50%', textAlign: 'center' }}
-            >
-              Roundtrip
-            </Radio.Button>
+            {Object.entries(roundtrips).map(
+              ([roundtripKey, roundtripValue]) => (
+                <Radio.Button
+                  key={roundtripKey}
+                  value={roundtripValue}
+                  style={{ width: '50%', textAlign: 'center' }}
+                >
+                  {roundtripKey}
+                </Radio.Button>
+              )
+            )}
           </Radio.Group>
         </Form.Item>
         <Form.List

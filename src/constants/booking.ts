@@ -8,5 +8,7 @@ export const harborTypes = {
   nusaPenida: harborTypeNusaPenida,
 }
 
-export const oneway = 'One-Way'
-export const roundtrip = 'Roundtrip'
+export const roundtrip = {
+  'One-Way': false,
+  'Round-Trip': true,
+}
