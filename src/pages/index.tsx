@@ -178,7 +178,7 @@ const Home: NextPage = () => {
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Submit
+            Create My Booking!
           </Button>
         </Form.Item>
       </Form>
