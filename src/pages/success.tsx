@@ -7,17 +7,14 @@ import { QRCodeSVG } from 'qrcode.react'
 
 const Success: NextPage = () => {
   const router = useRouter()
-  const [bookingRequest, setBookingRequest] = useState('loading')
+  const [bookingRequest, setBookingRequest] = useState<string | null>(null)
 
   useEffect(() => {
     setBookingRequest(localStorage.getItem('tanis-booking-request') || '')
   }, [])
 
-  return (
-    <Card
-      style={{ maxWidth: 500, margin: 'auto' }}
-      loading={bookingRequest === 'loading'}
-    >
+  return bookingRequest === null ? null : (
+    <Card style={{ maxWidth: 500, margin: 'auto' }}>
       {bookingRequest ? (
         <Result
           status="success"
