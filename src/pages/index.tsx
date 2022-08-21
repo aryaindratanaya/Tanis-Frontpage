@@ -22,12 +22,20 @@ import { genericRequiredRule } from 'libs/formRules'
 const Home: NextPage = () => {
   const router = useRouter()
 
+  const onFinish = (bookingRequest: any) => {
+    localStorage.setItem(
+      'tanis-booking-request',
+      JSON.stringify(bookingRequest)
+    )
+    router.push('success')
+  }
+
   return (
     <Card
       title="Let's Book a Voyage!"
       style={{ maxWidth: 500, margin: 'auto' }}
     >
-      <Form layout="vertical" onFinish={() => router.push('success')}>
+      <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="From"
           name="from"
