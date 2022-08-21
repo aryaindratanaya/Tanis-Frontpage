@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import {
   Button,
   Card,
@@ -16,12 +17,14 @@ import { countries } from 'constants/country'
 import { genericRequiredRule } from 'libs/formRules'
 
 const Home: NextPage = () => {
+  const router = useRouter()
+
   return (
     <Card
       title="Let's Book a Voyage!"
       style={{ maxWidth: 500, margin: 'auto' }}
     >
-      <Form layout="vertical">
+      <Form layout="vertical" onFinish={() => router.push('success')}>
         <Form.Item
           label="From"
           name="from"
