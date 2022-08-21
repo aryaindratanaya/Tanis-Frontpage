@@ -17,7 +17,10 @@ import { genericRequiredRule } from 'libs/formRules'
 
 const Home: NextPage = () => {
   return (
-    <Card title="Lets Book a Voyage!" style={{ maxWidth: 500, margin: 'auto' }}>
+    <Card
+      title="Let's Book a Voyage!"
+      style={{ maxWidth: 500, margin: 'auto' }}
+    >
       <Form layout="vertical">
         <Form.Item
           label="From"
