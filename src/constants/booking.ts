@@ -10,8 +10,3 @@ export const harborTypes = {
 
 export const oneway = 'One-Way'
 export const roundtrip = 'Roundtrip'
-
-export const tripTypes = {
-  oneway: oneway,
-  roundtrip: roundtrip,
-}
